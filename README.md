@@ -6,7 +6,7 @@
 # Step 4: Intro to SQL Beginner (Jupyter)
 # Step 5: Beginner Stats in Python (Jupyter)
 
-# Optionals:
+## Optionals:
 # Step 1: Intermediate Python
 # Step 2: Data Visualization Beginner
 # Step 6: R Fundamentals
