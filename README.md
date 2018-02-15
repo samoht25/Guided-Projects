@@ -10,4 +10,3 @@
 ## Step 1: Intermediate Python
 ## Step 2: Data Visualization Beginner
 ## Step 6: R Fundamentals
-## Step 6: Machine Learning Fundamentals
