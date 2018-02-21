@@ -1,0 +1,183 @@
+Introduction
+
+In [1]:
+import pandas as pd
+import matplotlib.pyplot as plt
+% matplotlib inline
+recent_grads = pd.read_csv('recent-grads.csv')
+print(recent_grads.iloc[0])
+print(recent_grads.head())
+print(recent_grads.tail())
+recent_grads = recent_grads.dropna()
+Rank                                        1
+Major_code                               2419
+Major                   PETROLEUM ENGINEERING
+Total                                    2339
+Men                                      2057
+Women                                     282
+Major_category                    Engineering
+ShareWomen                           0.120564
+Sample_size                                36
+Employed                                 1976
+Full_time                                1849
+Part_time                                 270
+Full_time_year_round                     1207
+Unemployed                                 37
+Unemployment_rate                   0.0183805
+Median                                 110000
+P25th                                   95000
+P75th                                  125000
+College_jobs                             1534
+Non_college_jobs                          364
+Low_wage_jobs                             193
+Name: 0, dtype: object
+   Rank  Major_code                                      Major    Total  \
+0     1        2419                      PETROLEUM ENGINEERING   2339.0   
+1     2        2416             MINING AND MINERAL ENGINEERING    756.0   
+2     3        2415                  METALLURGICAL ENGINEERING    856.0   
+3     4        2417  NAVAL ARCHITECTURE AND MARINE ENGINEERING   1258.0   
+4     5        2405                       CHEMICAL ENGINEERING  32260.0   
+
+       Men    Women Major_category  ShareWomen  Sample_size  Employed  \
+0   2057.0    282.0    Engineering    0.120564           36      1976   
+1    679.0     77.0    Engineering    0.101852            7       640   
+2    725.0    131.0    Engineering    0.153037            3       648   
+3   1123.0    135.0    Engineering    0.107313           16       758   
+4  21239.0  11021.0    Engineering    0.341631          289     25694   
+
+       ...        Part_time  Full_time_year_round  Unemployed  \
+0      ...              270                  1207          37   
+1      ...              170                   388          85   
+2      ...              133                   340          16   
+3      ...              150                   692          40   
+4      ...             5180                 16697        1672   
+
+   Unemployment_rate  Median  P25th   P75th  College_jobs  Non_college_jobs  \
+0           0.018381  110000  95000  125000          1534               364   
+1           0.117241   75000  55000   90000           350               257   
+2           0.024096   73000  50000  105000           456               176   
+3           0.050125   70000  43000   80000           529               102   
+4           0.061098   65000  50000   75000         18314              4440   
+
+   Low_wage_jobs  
+0            193  
+1             50  
+2              0  
+3              0  
+4            972  
+
+[5 rows x 21 columns]
+     Rank  Major_code                   Major   Total     Men   Women  \
+168   169        3609                 ZOOLOGY  8409.0  3050.0  5359.0   
+169   170        5201  EDUCATIONAL PSYCHOLOGY  2854.0   522.0  2332.0   
+170   171        5202     CLINICAL PSYCHOLOGY  2838.0   568.0  2270.0   
+171   172        5203   COUNSELING PSYCHOLOGY  4626.0   931.0  3695.0   
+172   173        3501         LIBRARY SCIENCE  1098.0   134.0   964.0   
+
+               Major_category  ShareWomen  Sample_size  Employed  \
+168    Biology & Life Science    0.637293           47      6259   
+169  Psychology & Social Work    0.817099            7      2125   
+170  Psychology & Social Work    0.799859           13      2101   
+171  Psychology & Social Work    0.798746           21      3777   
+172                 Education    0.877960            2       742   
+
+         ...        Part_time  Full_time_year_round  Unemployed  \
+168      ...             2190                  3602         304   
+169      ...              572                  1211         148   
+170      ...              648                  1293         368   
+171      ...              965                  2738         214   
+172      ...              237                   410          87   
+
+     Unemployment_rate  Median  P25th  P75th  College_jobs  Non_college_jobs  \
+168           0.046320   26000  20000  39000          2771              2947   
+169           0.065112   25000  24000  34000          1488               615   
+170           0.149048   25000  25000  40000           986               870   
+171           0.053621   23400  19200  26000          2403              1245   
+172           0.104946   22000  20000  22000           288               338   
+
+     Low_wage_jobs  
+168            743  
+169             82  
+170            622  
+171            308  
+172            192  
+
+[5 rows x 21 columns]
+Pandas, Scatter Plots
+In [2]:
+recent_grads.plot(x='Sample_size', y='Median', kind='scatter')
+Out[2]:
+<matplotlib.axes._subplots.AxesSubplot at 0x10d9bef98>
+
+In [3]:
+recent_grads.plot(x='Sample_size', y='Unemployment_rate', kind='scatter')
+Out[3]:
+<matplotlib.axes._subplots.AxesSubplot at 0x10fe0a400>
+
+In [4]:
+recent_grads.plot(x='Full_time', y='Median', kind='scatter')
+Out[4]:
+<matplotlib.axes._subplots.AxesSubplot at 0x1102f2dd8>
+
+In [5]:
+recent_grads.plot(x='ShareWomen', y='Unemployment_rate', kind='scatter')
+Out[5]:
+<matplotlib.axes._subplots.AxesSubplot at 0x11038c940>
+
+In [6]:
+recent_grads.plot(x='Men', y='Median', kind='scatter')
+Out[6]:
+<matplotlib.axes._subplots.AxesSubplot at 0x110839b70>
+
+In [7]:
+recent_grads.plot(x='Women', y='Median', kind='scatter')
+Out[7]:
+<matplotlib.axes._subplots.AxesSubplot at 0x1103d4208>
+
+Pandas, Histograms
+In [16]:
+cols = ["Sample_size", "Median", "Employed", "Full_time", "ShareWomen", "Unemployment_rate", "Men", "Women"]
+
+fig = plt.figure(figsize=(5,12))
+for r in range(1,5):
+    ax = fig.add_subplot(4,1,r)
+    ax = recent_grads[cols[r]].plot(kind='hist', rot=40)
+
+In [21]:
+cols = ["Sample_size", "Median", "Employed", "Full_time", "ShareWomen", "Unemployment_rate", "Men", "Women"]
+
+fig = plt.figure(figsize=(5,12))
+for r in range(4,8):
+    ax = fig.add_subplot(4,1,r-3)
+    ax = recent_grads[cols[r]].plot(kind='hist', rot=40)
+
+Pandas, Scatter Matrix Plot
+In [22]:
+from pandas.tools.plotting import scatter_matrix
+scatter_matrix(recent_grads[['Sample_size', 'Median']], figsize=(6,6))
+Out[22]:
+array([[<matplotlib.axes._subplots.AxesSubplot object at 0x111401eb8>,
+        <matplotlib.axes._subplots.AxesSubplot object at 0x111aae9e8>],
+       [<matplotlib.axes._subplots.AxesSubplot object at 0x1114d9240>,
+        <matplotlib.axes._subplots.AxesSubplot object at 0x1114a01d0>]], dtype=object)
+
+In [23]:
+scatter_matrix(recent_grads[['Sample_size', 'Median', 'Unemployment_rate']], figsize=(10,10))
+Out[23]:
+array([[<matplotlib.axes._subplots.AxesSubplot object at 0x1117696a0>,
+        <matplotlib.axes._subplots.AxesSubplot object at 0x110bda7b8>,
+        <matplotlib.axes._subplots.AxesSubplot object at 0x1118d7eb8>],
+       [<matplotlib.axes._subplots.AxesSubplot object at 0x111146a58>,
+        <matplotlib.axes._subplots.AxesSubplot object at 0x1111af9b0>,
+        <matplotlib.axes._subplots.AxesSubplot object at 0x11145d748>],
+       [<matplotlib.axes._subplots.AxesSubplot object at 0x111e56438>,
+        <matplotlib.axes._subplots.AxesSubplot object at 0x1111a14e0>,
+        <matplotlib.axes._subplots.AxesSubplot object at 0x110dc3d68>]], dtype=object)
+
+Pandas, Bar Plots
+In [24]:
+recent_grads[:10].plot.bar(x='Major', y='ShareWomen', legend=False)
+recent_grads[163:].plot.bar(x='Major', y='ShareWomen', legend=False)
+Out[24]:
+<matplotlib.axes._subplots.AxesSubplot at 0x112c359e8>
+
