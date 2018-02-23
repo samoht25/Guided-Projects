@@ -1,0 +1,174 @@
+In [82]:
+import pandas as pd
+star_wars = pd.read_csv("star_wars.csv", encoding="ISO-8859-1")
+In [83]:
+star_wars = star_wars[pd.notnull(star_wars["RespondentID"])]
+In [84]:
+star_wars.head()
+Out[84]:
+RespondentID	Have you seen any of the 6 films in the Star Wars franchise?	Do you consider yourself to be a fan of the Star Wars film franchise?	Which of the following Star Wars films have you seen? Please select all that apply.	Unnamed: 4	Unnamed: 5	Unnamed: 6	Unnamed: 7	Unnamed: 8	Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.	...	Unnamed: 28	Which character shot first?	Are you familiar with the Expanded Universe?	Do you consider yourself to be a fan of the Expanded Universe?ÂÃ¦	Do you consider yourself to be a fan of the Star Trek franchise?	Gender	Age	Household Income	Education	Location (Census Region)
+1	3292879998	Yes	Yes	Star Wars: Episode I The Phantom Menace	Star Wars: Episode II Attack of the Clones	Star Wars: Episode III Revenge of the Sith	Star Wars: Episode IV A New Hope	Star Wars: Episode V The Empire Strikes Back	Star Wars: Episode VI Return of the Jedi	3	...	Very favorably	I don't understand this question	Yes	No	No	Male	18-29	NaN	High school degree	South Atlantic
+2	3292879538	No	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	...	NaN	NaN	NaN	NaN	Yes	Male	18-29	$0 - $24,999	Bachelor degree	West South Central
+3	3292765271	Yes	No	Star Wars: Episode I The Phantom Menace	Star Wars: Episode II Attack of the Clones	Star Wars: Episode III Revenge of the Sith	NaN	NaN	NaN	1	...	Unfamiliar (N/A)	I don't understand this question	No	NaN	No	Male	18-29	$0 - $24,999	High school degree	West North Central
+4	3292763116	Yes	Yes	Star Wars: Episode I The Phantom Menace	Star Wars: Episode II Attack of the Clones	Star Wars: Episode III Revenge of the Sith	Star Wars: Episode IV A New Hope	Star Wars: Episode V The Empire Strikes Back	Star Wars: Episode VI Return of the Jedi	5	...	Very favorably	I don't understand this question	No	NaN	Yes	Male	18-29	$100,000 - $149,999	Some college or Associate degree	West North Central
+5	3292731220	Yes	Yes	Star Wars: Episode I The Phantom Menace	Star Wars: Episode II Attack of the Clones	Star Wars: Episode III Revenge of the Sith	Star Wars: Episode IV A New Hope	Star Wars: Episode V The Empire Strikes Back	Star Wars: Episode VI Return of the Jedi	5	...	Somewhat favorably	Greedo	Yes	No	No	Male	18-29	$100,000 - $149,999	Some college or Associate degree	West North Central
+5 rows × 38 columns
+
+In [85]:
+star_wars.columns
+Out[85]:
+Index(['RespondentID',
+       'Have you seen any of the 6 films in the Star Wars franchise?',
+       'Do you consider yourself to be a fan of the Star Wars film franchise?',
+       'Which of the following Star Wars films have you seen? Please select all that apply.',
+       'Unnamed: 4', 'Unnamed: 5', 'Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8',
+       'Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.',
+       'Unnamed: 10', 'Unnamed: 11', 'Unnamed: 12', 'Unnamed: 13',
+       'Unnamed: 14',
+       'Please state whether you view the following characters favorably, unfavorably, or are unfamiliar with him/her.',
+       'Unnamed: 16', 'Unnamed: 17', 'Unnamed: 18', 'Unnamed: 19',
+       'Unnamed: 20', 'Unnamed: 21', 'Unnamed: 22', 'Unnamed: 23',
+       'Unnamed: 24', 'Unnamed: 25', 'Unnamed: 26', 'Unnamed: 27',
+       'Unnamed: 28', 'Which character shot first?',
+       'Are you familiar with the Expanded Universe?',
+       'Do you consider yourself to be a fan of the Expanded Universe?ÂÃ¦',
+       'Do you consider yourself to be a fan of the Star Trek franchise?',
+       'Gender', 'Age', 'Household Income', 'Education',
+       'Location (Census Region)'],
+      dtype='object')
+In [86]:
+yes_no = {"Yes": True, "No": False}
+
+for col in [
+    "Have you seen any of the 6 films in the Star Wars franchise?",
+    "Do you consider yourself to be a fan of the Star Wars film franchise?"
+    ]:
+    star_wars[col] = star_wars[col].map(yes_no)
+
+star_wars.head()
+Out[86]:
+RespondentID	Have you seen any of the 6 films in the Star Wars franchise?	Do you consider yourself to be a fan of the Star Wars film franchise?	Which of the following Star Wars films have you seen? Please select all that apply.	Unnamed: 4	Unnamed: 5	Unnamed: 6	Unnamed: 7	Unnamed: 8	Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.	...	Unnamed: 28	Which character shot first?	Are you familiar with the Expanded Universe?	Do you consider yourself to be a fan of the Expanded Universe?ÂÃ¦	Do you consider yourself to be a fan of the Star Trek franchise?	Gender	Age	Household Income	Education	Location (Census Region)
+1	3292879998	True	True	Star Wars: Episode I The Phantom Menace	Star Wars: Episode II Attack of the Clones	Star Wars: Episode III Revenge of the Sith	Star Wars: Episode IV A New Hope	Star Wars: Episode V The Empire Strikes Back	Star Wars: Episode VI Return of the Jedi	3	...	Very favorably	I don't understand this question	Yes	No	No	Male	18-29	NaN	High school degree	South Atlantic
+2	3292879538	False	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	...	NaN	NaN	NaN	NaN	Yes	Male	18-29	$0 - $24,999	Bachelor degree	West South Central
+3	3292765271	True	False	Star Wars: Episode I The Phantom Menace	Star Wars: Episode II Attack of the Clones	Star Wars: Episode III Revenge of the Sith	NaN	NaN	NaN	1	...	Unfamiliar (N/A)	I don't understand this question	No	NaN	No	Male	18-29	$0 - $24,999	High school degree	West North Central
+4	3292763116	True	True	Star Wars: Episode I The Phantom Menace	Star Wars: Episode II Attack of the Clones	Star Wars: Episode III Revenge of the Sith	Star Wars: Episode IV A New Hope	Star Wars: Episode V The Empire Strikes Back	Star Wars: Episode VI Return of the Jedi	5	...	Very favorably	I don't understand this question	No	NaN	Yes	Male	18-29	$100,000 - $149,999	Some college or Associate degree	West North Central
+5	3292731220	True	True	Star Wars: Episode I The Phantom Menace	Star Wars: Episode II Attack of the Clones	Star Wars: Episode III Revenge of the Sith	Star Wars: Episode IV A New Hope	Star Wars: Episode V The Empire Strikes Back	Star Wars: Episode VI Return of the Jedi	5	...	Somewhat favorably	Greedo	Yes	No	No	Male	18-29	$100,000 - $149,999	Some college or Associate degree	West North Central
+5 rows × 38 columns
+
+In [87]:
+import numpy as np
+
+movie_mapping = {
+    "Star Wars: Episode I  The Phantom Menace": True,
+    np.nan: False,
+    "Star Wars: Episode II  Attack of the Clones": True,
+    "Star Wars: Episode III  Revenge of the Sith": True,
+    "Star Wars: Episode IV  A New Hope": True,
+    "Star Wars: Episode V The Empire Strikes Back": True,
+    "Star Wars: Episode VI Return of the Jedi": True
+}
+
+for col in star_wars.columns[3:9]:
+    star_wars[col] = star_wars[col].map(movie_mapping)
+In [88]:
+star_wars = star_wars.rename(columns={
+        "Which of the following Star Wars films have you seen? Please select all that apply.": "seen_1",
+        "Unnamed: 4": "seen_2",
+        "Unnamed: 5": "seen_3",
+        "Unnamed: 6": "seen_4",
+        "Unnamed: 7": "seen_5",
+        "Unnamed: 8": "seen_6"
+        })
+
+star_wars.head()
+Out[88]:
+RespondentID	Have you seen any of the 6 films in the Star Wars franchise?	Do you consider yourself to be a fan of the Star Wars film franchise?	seen_1	seen_2	seen_3	seen_4	seen_5	seen_6	Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.	...	Unnamed: 28	Which character shot first?	Are you familiar with the Expanded Universe?	Do you consider yourself to be a fan of the Expanded Universe?ÂÃ¦	Do you consider yourself to be a fan of the Star Trek franchise?	Gender	Age	Household Income	Education	Location (Census Region)
+1	3292879998	True	True	True	True	True	True	True	True	3	...	Very favorably	I don't understand this question	Yes	No	No	Male	18-29	NaN	High school degree	South Atlantic
+2	3292879538	False	NaN	False	False	False	False	False	False	NaN	...	NaN	NaN	NaN	NaN	Yes	Male	18-29	$0 - $24,999	Bachelor degree	West South Central
+3	3292765271	True	False	True	True	True	False	False	False	1	...	Unfamiliar (N/A)	I don't understand this question	No	NaN	No	Male	18-29	$0 - $24,999	High school degree	West North Central
+4	3292763116	True	True	True	True	True	True	True	True	5	...	Very favorably	I don't understand this question	No	NaN	Yes	Male	18-29	$100,000 - $149,999	Some college or Associate degree	West North Central
+5	3292731220	True	True	True	True	True	True	True	True	5	...	Somewhat favorably	Greedo	Yes	No	No	Male	18-29	$100,000 - $149,999	Some college or Associate degree	West North Central
+5 rows × 38 columns
+
+In [89]:
+star_wars = star_wars.rename(columns={
+        "Please rank the Star Wars films in order of preference with 1 being your favorite film in the franchise and 6 being your least favorite film.": "ranking_1",
+        "Unnamed: 10": "ranking_2",
+        "Unnamed: 11": "ranking_3",
+        "Unnamed: 12": "ranking_4",
+        "Unnamed: 13": "ranking_5",
+        "Unnamed: 14": "ranking_6"
+        })
+
+star_wars.head()
+Out[89]:
+RespondentID	Have you seen any of the 6 films in the Star Wars franchise?	Do you consider yourself to be a fan of the Star Wars film franchise?	seen_1	seen_2	seen_3	seen_4	seen_5	seen_6	ranking_1	...	Unnamed: 28	Which character shot first?	Are you familiar with the Expanded Universe?	Do you consider yourself to be a fan of the Expanded Universe?ÂÃ¦	Do you consider yourself to be a fan of the Star Trek franchise?	Gender	Age	Household Income	Education	Location (Census Region)
+1	3292879998	True	True	True	True	True	True	True	True	3	...	Very favorably	I don't understand this question	Yes	No	No	Male	18-29	NaN	High school degree	South Atlantic
+2	3292879538	False	NaN	False	False	False	False	False	False	NaN	...	NaN	NaN	NaN	NaN	Yes	Male	18-29	$0 - $24,999	Bachelor degree	West South Central
+3	3292765271	True	False	True	True	True	False	False	False	1	...	Unfamiliar (N/A)	I don't understand this question	No	NaN	No	Male	18-29	$0 - $24,999	High school degree	West North Central
+4	3292763116	True	True	True	True	True	True	True	True	5	...	Very favorably	I don't understand this question	No	NaN	Yes	Male	18-29	$100,000 - $149,999	Some college or Associate degree	West North Central
+5	3292731220	True	True	True	True	True	True	True	True	5	...	Somewhat favorably	Greedo	Yes	No	No	Male	18-29	$100,000 - $149,999	Some college or Associate degree	West North Central
+5 rows × 38 columns
+
+In [90]:
+star_wars[star_wars.columns[9:15]] = star_wars[star_wars.columns[9:15]].astype(float)
+In [91]:
+star_wars[star_wars.columns[9:15]].mean()
+Out[91]:
+ranking_1    3.732934
+ranking_2    4.087321
+ranking_3    4.341317
+ranking_4    3.272727
+ranking_5    2.513158
+ranking_6    3.047847
+dtype: float64
+In [93]:
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+plt.bar(range(6), star_wars[star_wars.columns[9:15]].mean())
+Out[93]:
+<Container object of 6 artists>
+
+Rankings
+So far, we've cleaned up the data, renamed several columns, and computed the average ranking of each movie. As I suspected, it looks like the "original" movies are rated much more highly than the newer ones.
+
+In [97]:
+star_wars[star_wars.columns[3:9]].sum()
+Out[97]:
+seen_1    673
+seen_2    571
+seen_3    550
+seen_4    607
+seen_5    758
+seen_6    738
+dtype: int64
+In [96]:
+plt.bar(range(6), star_wars[star_wars.columns[3:9]].sum())
+Out[96]:
+<Container object of 6 artists>
+
+View counts
+It appears that the original movies were seen by more respondents than the newer movies. This reinforces what we saw in the rankings, where the earlier movies seem to be more popular.
+
+In [98]:
+males = star_wars[star_wars["Gender"] == "Male"]
+females = star_wars[star_wars["Gender"] == "Female"]
+In [99]:
+plt.bar(range(6), males[males.columns[9:15]].mean())
+plt.show()
+
+plt.bar(range(6), females[females.columns[9:15]].mean())
+plt.show()
+
+
+In [100]:
+plt.bar(range(6), males[males.columns[3:9]].sum())
+plt.show()
+
+plt.bar(range(6), females[females.columns[3:9]].sum())
+plt.show()
+
+
+Male/Female differences in favorite Star Wars movie and most seen movie
+Interestingly, more males watches episodes 1-3, but males liked them far less than females did.
